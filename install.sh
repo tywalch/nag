@@ -19,6 +19,8 @@ shift
 
 ARGS="\$*"
 
+$BINARY_TARGET -p \$DURATION \"\$ARGS\"
+
 nohup $BINARY_TARGET \$DURATION \"\$ARGS\" > /dev/null 2>&1 &
 " > $INSTALL_TARGET
 

@@ -1,7 +1,9 @@
 use clap::{App, Arg};
 use std::process::Command;
 use std::thread;
-use std::time::Duration;
+use std::time::{Duration};
+use chrono::{DateTime};
+use chrono::prelude::Local;
 
 fn parse_duration(s: &str) -> Result<Duration, &'static str> {
     let parts: Vec<&str> = s.split(':').collect();
@@ -52,11 +54,22 @@ fn get_speak_command() -> (&'static str, Vec<&'static str>) {
     ("powershell", vec!["-Command", "Add-Type –AssemblyName System.speech; $speak = New-Object System.Speech.Synthesis.SpeechSynthesizer; $speak.Speak('"])
 }
 
+fn to_future_time_str(duration: Duration) -> String {
+    let future_time: DateTime<Local> = Local::now() + duration;
+    future_time.format("%l:%M:%S")
+        .to_string()
+}
+
 fn main() {
     let matches = App::new("Speak After Delay")
         .version("0.1.0")
         .author("Nag")
         .about("Reminds you after a specified duration by speaking a message")
+        .arg(Arg::new("print-only")
+            .help("only print time after duration provided")
+            .short_alias('p')
+            .long("print-only")
+            .takes_value(false))
         .arg(Arg::with_name("duration")
             .help("Duration in hh:mm:ss, mm:ss, or ss format")
             .required(true)
@@ -69,11 +82,18 @@ fn main() {
 
     let duration_str = matches.value_of("duration").unwrap();
     let duration = parse_duration(duration_str).expect("Failed to parse duration");
+    let print_only = matches.is_present("print-only");
+    let future_time = to_future_time_str(duration);
+
+    println!("will nag at: {}", future_time.trim());
+
+    if print_only {
+        return;
+    }
 
     let messages: Vec<&str> = matches.values_of("message").unwrap().collect();
     let concatenated_message = messages.join(" ");
 
-    println!("Will remind you in {:?}", duration);
     thread::sleep(duration);
 
     speak_message(&concatenated_message);
