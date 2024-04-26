@@ -65,10 +65,10 @@ fn main() {
         .version("0.1.0")
         .author("Nag")
         .about("Reminds you after a specified duration by speaking a message")
-        .arg(Arg::new("print-only")
-            .help("only print time after duration provided")
-            .short_alias('p')
-            .long("print-only")
+        .arg(Arg::new("estimate")
+            .help("print nag time estimate based on duration provided")
+            .short_alias('e')
+            .long("estimate")
             .takes_value(false))
         .arg(Arg::with_name("duration")
             .help("Duration in hh:mm:ss, mm:ss, or ss format")
@@ -82,12 +82,12 @@ fn main() {
 
     let duration_str = matches.value_of("duration").unwrap();
     let duration = parse_duration(duration_str).expect("Failed to parse duration");
-    let print_only = matches.is_present("print-only");
+    let estimate = matches.is_present("estimate");
     let future_time = to_future_time_str(duration);
 
-    println!("will nag at: {}", future_time.trim());
+    println!("nagging @ {}", future_time.trim());
 
-    if print_only {
+    if estimate {
         return;
     }
 
