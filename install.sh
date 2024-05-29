@@ -15,15 +15,17 @@ if [ "\$#" -lt 2 ]; then
     exit 1
 fi
 
-DURATION=\$1
+WHEN=\$1
+DURATION=\$2
 
+shift
 shift
 
 ARGS="\$*"
 
-$BINARY_TARGET -e \$DURATION \"\$ARGS\"
+$BINARY_TARGET -e \$WHEN \$DURATION \"\$ARGS\"
 
-nohup $BINARY_TARGET \$DURATION \"\$ARGS\" > /dev/null 2>&1 &
+nohup $BINARY_TARGET \$WHEN \$DURATION \"\$ARGS\" > /dev/null 2>&1 &
 " > "$INSTALL_TARGET"
 
 chmod +x "$INSTALL_TARGET"
