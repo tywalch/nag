@@ -75,8 +75,11 @@ fn duration_at(s: &str) -> Result<Duration, &'static str> {
     };
 
     let parts: Vec<&str> = provided_time_str.split(':').collect();
-    let mut hour = parts[0].trim().parse::<u32>().map_err(|_| "Invalid hour")?;
+    if parts.len() != 2 {
+        return Err("Invalid time format");
+    }
 
+    let mut hour = parts[0].trim().parse::<u32>().map_err(|_| "Invalid hour")?;
     let minute = parts[1]
         .trim()
         .parse::<u32>()
