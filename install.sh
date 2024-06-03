@@ -23,7 +23,8 @@ shift
 
 ARGS="\$*"
 
-$BINARY_TARGET -e \$WHEN \$DURATION \"\$ARGS\"
+ESTIMATE=\$($BINARY_TARGET -e \$WHEN \$DURATION \"\$ARGS\")
+echo \"nagging @ \$ESTIMATE\"
 
 nohup $BINARY_TARGET \$WHEN \$DURATION \"\$ARGS\" > /dev/null 2>&1 &
 " > "$INSTALL_TARGET"

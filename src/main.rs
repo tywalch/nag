@@ -162,7 +162,7 @@ fn main() {
     let estimate = matches.is_present("estimate");
     let target_time = format_target_time(duration);
 
-    println!("nagging @ {}", target_time);
+    println!("{}", target_time);
 
     if estimate {
         return;
