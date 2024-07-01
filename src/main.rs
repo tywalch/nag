@@ -74,8 +74,10 @@ fn duration_at(s: &str) -> Result<Duration, &'static str> {
         (s, "")
     };
 
-    let parts: Vec<&str> = provided_time_str.split(':').collect();
-    if parts.len() != 2 {
+    let mut parts: Vec<&str> = provided_time_str.split(':').collect();
+    if parts.len() == 1 {
+        parts.push("00")
+    } else if parts.len() != 2 {
         return Err("Invalid time format");
     }
 
