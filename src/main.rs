@@ -174,6 +174,13 @@ fn main() {
     let concatenated_message = messages.join(" ");
 
     thread::sleep(duration);
-
-    speak_message(&concatenated_message);
+    
+    let now = Local::now();
+    let target_time = Local::now() + duration;
+    // It is possible that the time has already passed by the time we wake up. If we notify the user
+    // in such cases, it would be confusing. So we only notify if the target time is within the next
+    // 30 seconds since that's a number that still seems reasonable from a ux perspective.
+    if target_time - now < ChronoDuration::seconds(30) {
+        speak_message(&concatenated_message);
+    }
 }
