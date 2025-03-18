@@ -179,8 +179,8 @@ fn main() {
     let now = Local::now();
     // It is possible that the time has already passed by the time we wake up. If we notify the user
     // in such cases, it would be confusing. So we only notify if the target time is within the next
-    // 60 seconds since that's a number that still seems reasonable from a ux perspective.
-    if target_time - now < ChronoDuration::seconds(60) {
+    // 5 seconds since that's a number that still seems reasonable from a ux perspective.
+    if target_time - now < ChronoDuration::minutes(5) {
         speak_message(&concatenated_message);
     }
 }
