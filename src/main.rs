@@ -157,7 +157,7 @@ fn main() {
     } else if when_str == "at" {
         duration_at(target_str).expect("Failed to parse time")
     } else {
-        eprintln!("Invalid value for 'when'. Only 'in' and 'at' are supported.");
+        println!("Invalid value for 'when'. Only 'in' and 'at' are supported.");
         return;
     };
 
@@ -172,15 +172,15 @@ fn main() {
 
     let messages: Vec<&str> = matches.values_of("message").unwrap().collect();
     let concatenated_message = messages.join(" ");
+    let target_time = Local::now() + duration;
 
     thread::sleep(duration);
     
     let now = Local::now();
-    let target_time = Local::now() + duration;
     // It is possible that the time has already passed by the time we wake up. If we notify the user
     // in such cases, it would be confusing. So we only notify if the target time is within the next
     // 30 seconds since that's a number that still seems reasonable from a ux perspective.
-    if target_time - now < ChronoDuration::seconds(30) {
+    if target_time - now < ChronoDuration::seconds(60) {
         speak_message(&concatenated_message);
     }
 }
