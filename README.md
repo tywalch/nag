@@ -48,15 +48,29 @@ Arguments    | Description
 
 ### Examples
 
-Wait for 10 minutes and then speak the message "Time to take a break"
+Wait for 30 minutes and then speak the message "Time to take a break"
 > ```
-> nag 10 "Time to take a break"
+> nag in 30 "Time to take a break"
+> ```
+
+Wait for an hour and 10 minutes and then speak the message "Time to take a break"
+> ```
+> nag in 1:10 "Time to take a break"
 > ```
 
 ----
 
-Wait for 30 minutes and then speak the messages "Meeting in 5 minutes"
+Wait until 9:55am then speak the message "Meeting in 5 minutes"
 
 > ```
-> nag 30 Meeting in 5 minutes
+> nag at 9:55am "Meeting in 5 minutes"
 > ```
+
+----
+
+Terse time intuition, wait until 10:55pm then speak the message "Go to bed"
+> ```
+> date
+> > Wed Feb 12 19:21:12 EST 202
+> nag at 10:55 "Go to bed"
+> > nagging @ 10:55p
