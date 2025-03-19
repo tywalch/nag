@@ -23,7 +23,7 @@ shift
 
 ARGS="\$*"
 
-ESTIMATE=\$($BINARY_TARGET -e \$WHEN \$DURATION \"\$ARGS\")
+ESTIMATE='\$($BINARY_TARGET -e \$WHEN \$DURATION \"\$ARGS\")'
 echo \"nagging @ \$ESTIMATE\"
 
 if [ -z \"\$ARGS\" ]; then
