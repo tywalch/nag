@@ -26,6 +26,10 @@ ARGS="\$*"
 ESTIMATE=\$($BINARY_TARGET -e \$WHEN \$DURATION \"\$ARGS\")
 echo \"nagging @ \$ESTIMATE\"
 
+if [ -z \"\$ARGS\" ]; then
+    ARGS=\"it is now \$ESTIMATE\"
+fi
+
 nohup $BINARY_TARGET \$WHEN \$DURATION \"\$ARGS\" > /dev/null 2>&1 &
 " > "$INSTALL_TARGET"
 
